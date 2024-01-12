@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reco_app/models/feeds_model.dart';
-import 'package:reco_app/navigation/bottom_navigation.dart';
 
 class FeedsController extends StateNotifier<List<Feeds>> {
   FeedsController() : super([]);
@@ -21,13 +20,7 @@ class FeedsController extends StateNotifier<List<Feeds>> {
       {required BuildContext context, required Feeds feeds}) async {
     final doc = db.doc();
 
-    Navigator.pushReplacement(
-        context,
-        CupertinoPageRoute(
-            builder: (context) => const BottomNavigation(
-                  initialIndex: 1,
-                )));
-
+    Navigator.of(context).pop();
     Feeds temp = feeds.copyWith(
       fid: doc.id,
       createdAt: DateTime.now(),

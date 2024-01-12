@@ -65,7 +65,8 @@ class _FeedsPageState extends ConsumerState<FeedsPage> {
                 itemBuilder: (context, index) {
                   var feedsData = feeds[index];
                   return Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0),
                     child: FeedsCardWidget(
                       author: feedsData.author.toString(),
                       title: feedsData.title.toString(),

@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
@@ -60,22 +61,6 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: HexColor('4DC667'),
-                foregroundColor: Colors.white,
-                surfaceTintColor: HexColor('4DC667'),
-              ),
-              child: const Text('Pick Image'),
-              onPressed: () {
-                pickImage();
-              },
-            ),
-          )
-        ],
         surfaceTintColor: Colors.white,
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
@@ -92,12 +77,43 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
               Form(
                 child: Column(
                   children: [
-                    if (_file != null)
-                      Image.file(
-                        _file!,
-                        width: MediaQuery.sizeOf(context).width / 4,
-                        fit: BoxFit.cover,
+                    Card(
+                      color: Colors.grey[300],
+                      semanticContainer: true,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
+                      elevation: 0,
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: _file == null
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/img/no_img.svg',
+                                    fit: BoxFit.fill,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      pickImage();
+                                    },
+                                    child: const Text(
+                                      'Add image',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black54),
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Image.file(
+                                _file!,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
                     const SizedBox(height: 24.0),
                     TextFormField(
                       controller: title,
@@ -166,7 +182,7 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
                         Logger().i(e);
                       }
                     },
-                    label: 'Share',
+                    label: 'Post Article',
                     backgroundColor: '4DC667',
                     textColor: Colors.white,
                   ),
