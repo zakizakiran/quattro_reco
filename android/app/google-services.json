@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "780571832540",
+    "project_id": "reco-app-fd8c8",
+    "storage_bucket": "reco-app-fd8c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780571832540:android:a1bb0b4486c147bf684419",
+        "android_client_info": {
+          "package_name": "com.example.reco_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780571832540-crhab8kejpd76g6ief5t9pl5qbvkqg13.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.reco_app",
+            "certificate_hash": "d9b8b93b3165d470e367631bdb4694e0dd31f398"
+          }
+        },
+        {
+          "client_id": "780571832540-r4mjsjr3k8sqpin2am00b13j1lrm7nm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1xG0WQ0wTv3r17liIBmCCdgu3V1NhnLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780571832540-r4mjsjr3k8sqpin2am00b13j1lrm7nm9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
