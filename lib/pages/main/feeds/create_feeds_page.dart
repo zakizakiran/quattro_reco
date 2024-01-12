@@ -155,6 +155,7 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
                           captions: encodeToBase64(captions.text),
                           author: currentUser.name,
                           imgUrl: imageUrl,
+                          uid: currentUser.uid,
                         );
                         // ignore: use_build_context_synchronously
                         await ref

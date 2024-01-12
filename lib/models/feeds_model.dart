@@ -1,5 +1,6 @@
 class Feeds {
   String? fid;
+  String? uid;
   String? author;
   String? title;
   String? captions;
@@ -8,6 +9,7 @@ class Feeds {
 
   Feeds(
       {this.fid,
+      this.uid,
       this.author,
       this.title,
       this.captions,
@@ -17,6 +19,7 @@ class Feeds {
   factory Feeds.fromJson(Map<String, dynamic> json) {
     return Feeds(
       fid: json['fid'],
+      uid: json['uid'],
       author: json['author'],
       title: json['title'],
       captions: json['captions'],
@@ -28,6 +31,7 @@ class Feeds {
   Map<String, dynamic> toJson() {
     return {
       'fid': fid,
+      'uid': uid,
       'author': author,
       'title': title,
       'captions': captions,
@@ -38,6 +42,7 @@ class Feeds {
 
   Feeds copyWith({
     String? fid,
+    String? uid,
     String? author,
     String? title,
     String? captions,
@@ -46,6 +51,7 @@ class Feeds {
   }) {
     return Feeds(
       fid: fid ?? this.fid,
+      uid: uid ?? this.uid,
       author: author ?? this.author,
       title: title ?? this.title,
       captions: captions ?? this.captions,
