@@ -19,3 +19,24 @@ This feature allows users to share their aspirations and creativity related to w
 ## Recycling Points System:
 Users actively engaged in recycling activities, such as giving used items to others or sharing recycling-related content, will earn points. These points can be exchanged for various incentives, such as discounts at local stores, eco-friendly products, or even donations to environmental charities. Through this points system, our app provides a meaningful participation experience, stimulating environmental awareness, and empowering users on their sustainability journey.
 
+# How to Run
+
+- Clone the project
+```bash
+git clone https://github.com/zakizakiran/quattro_reco.git
+```
+
+- Go to the project directory
+```bash
+cd quattro_reco
+```
+
+- Install dependencies
+```bash
+flutter pub get
+```
+
+- Start the project
+```bash
+flutter run
+```
