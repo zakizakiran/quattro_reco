@@ -92,35 +92,61 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Expanded(
-                        child: ContainedTabBarView(
-                          tabs: const [
-                            Text('Posts'),
-                            Text('Products'),
-                          ],
-                          tabBarProperties: TabBarProperties(
-                            indicatorColor: HexColor('4DC667'),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32.0,
-                              vertical: 8.0,
+                      const SizedBox(height: 4.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '0',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: HexColor('4DC667'),
+                              fontWeight: FontWeight.w600,
                             ),
-                            labelColor: Colors.green,
-                            unselectedLabelColor: Colors.grey[400],
                           ),
-                          views: [
-                            ListView.builder(
-                              itemCount: userFeeds.length,
-                              itemBuilder: (context, index) {
-                                var feedsData = userFeeds[index];
-                                return FeedsTileWidget(
-                                  imgUrl: feedsData.imgUrl.toString(),
-                                  title: feedsData.title.toString(),
-                                  captions: feedsData.captions.toString(),
-                                );
-                              },
+                          const SizedBox(width: 8.0),
+                          Text(
+                            'Points',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: HexColor('4DC667'),
+                              fontWeight: FontWeight.w600,
                             ),
-                            Container(color: Colors.red),
-                          ],
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: ContainedTabBarView(
+                            tabs: const [
+                              Text('My Posts'),
+                              Text('Products'),
+                            ],
+                            tabBarProperties: TabBarProperties(
+                              indicatorColor: HexColor('4DC667'),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32.0,
+                                vertical: 8.0,
+                              ),
+                              labelColor: Colors.green,
+                              unselectedLabelColor: Colors.grey[400],
+                            ),
+                            views: [
+                              ListView.builder(
+                                itemCount: userFeeds.length,
+                                itemBuilder: (context, index) {
+                                  var feedsData = userFeeds[index];
+                                  return FeedsTileWidget(
+                                    imgUrl: feedsData.imgUrl.toString(),
+                                    title: feedsData.title.toString(),
+                                    captions: feedsData.captions.toString(),
+                                  );
+                                },
+                              ),
+                              Container(color: Colors.red),
+                            ],
+                          ),
                         ),
                       ),
                     ],
