@@ -162,7 +162,7 @@ class AuthController extends StateNotifier<Users> {
     state = users;
   }
 
-  Future<String> checkUsers(BuildContext context) async {
+  Future<String> checkUsers() async {
     final result = FirebaseAuth.instance.currentUser;
     Logger().i(result);
     if (result != null) {

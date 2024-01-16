@@ -27,6 +27,13 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+
+flutter_native_splash:
+  # Background color of splash screen
+  color: "#ffffff"
+  # Image that you want to show
+  image: assets/img/logo_reco.png
+
 dependencies:
   flutter:
     sdk: flutter
@@ -50,6 +57,8 @@ dependencies:
   image_picker: ^1.0.7
   firebase_storage: ^11.6.0
   date_format: ^2.0.7
+  contained_tab_bar_view: ^0.8.0
+  flutter_native_splash: ^2.3.9
 
 dev_dependencies:
   flutter_test:

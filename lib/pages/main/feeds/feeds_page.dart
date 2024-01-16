@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:reco_app/controller/feeds_controller.dart';
-import 'package:reco_app/models/feeds_model.dart';
 import 'package:reco_app/pages/main/feeds/create_feeds_page.dart';
 
 import '../../../widgets/custom/feeds_card_widget.dart';
@@ -21,8 +20,6 @@ class _FeedsPageState extends ConsumerState<FeedsPage> {
     super.initState();
     getAllFeeds();
   }
-
-  List<Feeds> feedsResult = [];
 
   Future<void> getAllFeeds() async {
     await ref.read(feedsControllerProvider.notifier).getFeeds();
