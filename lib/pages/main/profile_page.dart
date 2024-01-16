@@ -18,15 +18,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   void initState() {
     super.initState();
     getAllFeeds();
-    checkLogin();
   }
 
   Future<void> getAllFeeds() async {
     await ref.read(feedsControllerProvider.notifier).getFeeds();
-  }
-
-  Future<void> checkLogin() async {
-    await ref.read(authControllerProvider.notifier).checkUsers();
   }
 
   @override

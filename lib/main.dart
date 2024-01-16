@@ -12,9 +12,20 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final authController = AuthController();
+
+  // Create a provider container to access the AuthController
+  final container = ProviderContainer();
+
+  // Check the user's authentication status using AuthController
+  final authController = container.read(authControllerProvider.notifier);
   await authController.checkUsers();
-  runApp(const ProviderScope(child: MyApp()));
+
+  runApp(
+    ProviderScope(
+      parent: container,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

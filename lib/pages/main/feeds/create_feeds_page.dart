@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,6 +14,7 @@ import 'package:reco_app/controller/auth_controller.dart';
 import 'package:reco_app/controller/feeds_controller.dart';
 import 'package:reco_app/helper/text_formatter.dart';
 import 'package:reco_app/models/feeds_model.dart';
+import 'package:reco_app/navigation/bottom_navigation.dart';
 import 'package:reco_app/widgets/custom/custom_button.dart';
 
 class CreateFeedsPage extends ConsumerStatefulWidget {
@@ -173,10 +176,16 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
                           imgUrl: imageUrl,
                           uid: currentUser.uid,
                         );
-                        // ignore: use_build_context_synchronously
                         await ref
                             .read(feedsControllerProvider.notifier)
                             .createFeeds(context: context, feeds: feeds);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const BottomNavigation(initialIndex: 1),
+                          ),
+                        );
                         if (!mounted) return;
                       } on FirebaseException catch (e) {
                         Logger().i(e);

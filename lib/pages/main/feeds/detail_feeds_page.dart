@@ -43,11 +43,14 @@ class _DetailFeedsPageState extends ConsumerState<DetailFeedsPage> {
               expandedHeight: 200,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                background: ClipRRect(
-                  borderRadius: BorderRadius.circular(18.0),
-                  child: Image.network(
-                    widget.feeds!.imgUrl.toString(),
-                    fit: BoxFit.cover,
+                background: Hero(
+                  tag: widget.feeds!.imgUrl.toString(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(18.0),
+                    child: Image.network(
+                      widget.feeds!.imgUrl.toString(),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

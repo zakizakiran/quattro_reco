@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reco_app/models/feeds_model.dart';
 
@@ -9,7 +9,7 @@ class FeedsController extends StateNotifier<List<Feeds>> {
   final db = FirebaseFirestore.instance.collection('feeds');
 
   Future<void> getFeeds() async {
-    var checkFeeds = await db.get();
+    var checkFeeds = await db.orderBy('created_at', descending: true).get();
 
     List<Feeds> feeds =
         checkFeeds.docs.map((e) => Feeds.fromJson(e.data())).toList();
