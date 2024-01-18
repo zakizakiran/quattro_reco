@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reco_app/controller/auth_controller.dart';
+import 'package:reco_app/controller/feeds_controller.dart';
+import 'package:reco_app/controller/product_controller.dart';
 import 'package:reco_app/firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:reco_app/navigation/bottom_navigation.dart';
@@ -13,12 +15,16 @@ Future<void> main() async {
   initializeDateFormatting();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Create a provider container to access the AuthController
   final container = ProviderContainer();
 
-  // Check the user's authentication status using AuthController
   final authController = container.read(authControllerProvider.notifier);
   await authController.checkUsers();
+
+  final feedsController = container.read(feedsControllerProvider.notifier);
+  await feedsController.getFeeds();
+
+  final productController = container.read(productControllerProvider.notifier);
+  await productController.getProduct();
 
   runApp(
     ProviderScope(

@@ -98,10 +98,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           try {
-                            await ref
-                                .read(authControllerProvider.notifier)
-                                .signUp(context, name.text, email.text,
-                                    password.text);
+                            await ref.read(authControllerProvider.notifier).signUp(
+                                context: context,
+                                email: email.text,
+                                password: password.text,
+                                name: name.text,
+                                profileImg:
+                                    'https://firebasestorage.googleapis.com/v0/b/reco-app-fd8c8.appspot.com/o/profile_images%2Fno_profile.jpg?alt=media&token=c4e957fb-ab5c-43b3-8372-af2565f460d7');
+                            setState(() {});
                           } on FirebaseAuthException catch (e) {
                             Logger().i(e);
                           }

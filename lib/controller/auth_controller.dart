@@ -90,6 +90,7 @@ class AuthController extends StateNotifier<Users> {
           'uid': authResult.user!.uid,
           'name': authResult.user!.displayName,
           'email': authResult.user!.email,
+          'profile_img': authResult.user!.photoURL,
         });
       }
 
@@ -97,6 +98,7 @@ class AuthController extends StateNotifier<Users> {
         uid: authResult.user!.uid,
         name: authResult.user!.displayName ?? '',
         email: authResult.user!.email ?? '',
+        profileImg: authResult.user!.photoURL ?? '',
       );
 
       state = users;
@@ -114,8 +116,13 @@ class AuthController extends StateNotifier<Users> {
     }
   }
 
-  Future<void> signUp(
-      BuildContext context, String name, String email, String password) async {
+  Future<void> signUp({
+    required BuildContext context,
+    required String name,
+    required String email,
+    required String password,
+    required String profileImg,
+  }) async {
     try {
       var credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -131,27 +138,42 @@ class AuthController extends StateNotifier<Users> {
           'uid': credential.user!.uid,
           'name': name,
           'email': email,
+          'profile_img': profileImg,
         });
         final users = Users(
           uid: credential.user!.uid,
           name: name,
           email: email,
+          profileImg: profileImg,
         );
         state = users;
       }
       if (!mounted) return;
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
-        CupertinoPageRoute(
+        MaterialPageRoute(
           builder: (context) => const BottomNavigation(
             initialIndex: 0,
           ),
         ),
+        (route) => false, // Remove all existing routes from the stack
       );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       print(e);
     }
+  }
+
+  Future<void> updateProfile(
+      {required String uid,
+      required String name,
+      required String email,
+      required String photo}) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .update({"name": name, "email": email, "profile_img": photo});
+    await getUsers(uid: uid);
   }
 
   Future<void> getUsers({required String uid}) async {

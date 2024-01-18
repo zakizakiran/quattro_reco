@@ -1,26 +1,28 @@
-class Feeds {
-  String? fid;
+class Product {
+  String? pid;
   String? uid;
   String? author;
   String? authorImg;
+  String? imgUrl;
   String? title;
+  int? price;
   String? captions;
   DateTime? createdAt;
-  String? imgUrl;
 
-  Feeds(
-      {this.fid,
+  Product(
+      {this.pid,
       this.uid,
       this.author,
       this.authorImg,
       this.title,
       this.captions,
       this.createdAt,
+      this.price,
       this.imgUrl});
 
-  factory Feeds.fromJson(Map<String, dynamic> json) {
-    return Feeds(
-      fid: json['fid'],
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      pid: json['pid'],
       uid: json['uid'],
       author: json['author'],
       authorImg: json['author_img'],
@@ -28,12 +30,13 @@ class Feeds {
       captions: json['captions'],
       createdAt: DateTime.tryParse(json['created_at'].toDate().toString()),
       imgUrl: json['imgUrl'],
+      price: json['price'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'fid': fid,
+      'pid': pid,
       'uid': uid,
       'author': author,
       'author_img': authorImg,
@@ -41,21 +44,22 @@ class Feeds {
       'captions': captions,
       'created_at': createdAt,
       'imgUrl': imgUrl,
+      'price': price,
     };
   }
 
-  Feeds copyWith({
-    String? fid,
-    String? uid,
-    String? author,
-    String? authorImg,
-    String? title,
-    String? captions,
-    DateTime? createdAt,
-    String? imgUrl,
-  }) {
-    return Feeds(
-      fid: fid ?? this.fid,
+  Product copyWith(
+      {String? pid,
+      String? uid,
+      String? author,
+      String? authorImg,
+      String? title,
+      String? captions,
+      DateTime? createdAt,
+      String? imgUrl,
+      int? price}) {
+    return Product(
+      pid: pid ?? this.pid,
       uid: uid ?? this.uid,
       author: author ?? this.author,
       authorImg: authorImg ?? this.authorImg,
@@ -63,6 +67,7 @@ class Feeds {
       captions: captions ?? this.captions,
       createdAt: createdAt ?? this.createdAt,
       imgUrl: imgUrl ?? this.imgUrl,
+      price: price ?? this.price,
     );
   }
 }

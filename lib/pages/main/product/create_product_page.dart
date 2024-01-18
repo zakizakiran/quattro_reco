@@ -11,22 +11,24 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:reco_app/controller/auth_controller.dart';
-import 'package:reco_app/controller/feeds_controller.dart';
+import 'package:reco_app/controller/product_controller.dart';
 import 'package:reco_app/helper/text_formatter.dart';
-import 'package:reco_app/models/feeds_model.dart';
+import 'package:reco_app/models/product_model.dart';
 import 'package:reco_app/navigation/bottom_navigation.dart';
 import 'package:reco_app/widgets/custom/custom_button.dart';
 
-class CreateFeedsPage extends ConsumerStatefulWidget {
-  const CreateFeedsPage({super.key});
+class CreateProductPage extends ConsumerStatefulWidget {
+  const CreateProductPage({super.key});
 
   @override
-  ConsumerState<CreateFeedsPage> createState() => _CreateFeedsPageState();
+  ConsumerState<CreateProductPage> createState() => _CreateProductPageState();
 }
 
-class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
+class _CreateProductPageState extends ConsumerState<CreateProductPage> {
   TextEditingController title = TextEditingController();
   TextEditingController captions = TextEditingController();
+  TextEditingController price = TextEditingController();
+
   File? _file;
 
   final picker = ImagePicker();
@@ -40,12 +42,12 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
     });
   }
 
-  Future<String?> uploadFeedsImage() async {
+  Future<String?> uploadProductImages() async {
     try {
       if (_file == null) return null;
 
       final Reference storageReference =
-          storage.ref().child('feeds_images/${DateTime.now().toString()}');
+          storage.ref().child('product_images/${DateTime.now().toString()}');
       final UploadTask uploadTask = storageReference.putFile(_file!);
       final TaskSnapshot taskSnapshot =
           await uploadTask.whenComplete(() => null);
@@ -124,7 +126,26 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
                       keyboardType: TextInputType.name,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                        hintText: 'Title',
+                        hintText: 'Product Title',
+                        hintStyle: TextStyle(color: Colors.grey.shade400),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(color: HexColor('4DC667')),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: price,
+                      cursorColor: HexColor('4DC667'),
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        hintText: 'Product Price',
                         hintStyle: TextStyle(color: Colors.grey.shade400),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -167,24 +188,25 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
                   CustomButton(
                     onPressed: () async {
                       try {
-                        String? imageUrl = await uploadFeedsImage();
+                        String? imageUrl = await uploadProductImages();
 
-                        Feeds feeds = Feeds(
+                        Product product = Product(
                           title: title.text,
                           captions: encodeToBase64(captions.text),
                           author: currentUser.name,
                           imgUrl: imageUrl,
+                          price: int.tryParse(price.text),
                           authorImg: currentUser.profileImg,
                           uid: currentUser.uid,
                         );
                         await ref
-                            .read(feedsControllerProvider.notifier)
-                            .createFeeds(context: context, feeds: feeds);
+                            .read(productControllerProvider.notifier)
+                            .createProduct(context: context, product: product);
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                const BottomNavigation(initialIndex: 1),
+                                const BottomNavigation(initialIndex: 2),
                           ),
                         );
                         if (!mounted) return;
@@ -192,7 +214,7 @@ class _CreateFeedsPageState extends ConsumerState<CreateFeedsPage> {
                         Logger().i(e);
                       }
                     },
-                    label: 'Post Article',
+                    label: 'Post Product',
                     backgroundColor: '4DC667',
                     textColor: Colors.white,
                   ),

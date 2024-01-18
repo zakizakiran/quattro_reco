@@ -12,12 +12,14 @@ class FeedsCardWidget extends StatelessWidget {
     required this.captions,
     required this.imgUrl,
     required this.feeds,
+    required this.profileImg,
   });
 
   final String title;
   final String author;
   final String captions;
   final String imgUrl;
+  final String profileImg;
   final Feeds feeds;
 
   @override
@@ -69,8 +71,8 @@ class FeedsCardWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          backgroundImage: AssetImage('assets/img/people.jpg'),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(profileImg),
                         ),
                         const SizedBox(width: 8.0),
                         Text(author)
