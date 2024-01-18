@@ -6,6 +6,7 @@ class Product {
   String? imgUrl;
   String? title;
   int? price;
+  int? rating;
   String? captions;
   DateTime? createdAt;
 
@@ -18,6 +19,7 @@ class Product {
       this.captions,
       this.createdAt,
       this.price,
+      this.rating,
       this.imgUrl});
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class Product {
       createdAt: DateTime.tryParse(json['created_at'].toDate().toString()),
       imgUrl: json['imgUrl'],
       price: json['price'],
+      rating: json['rating'],
     );
   }
 
@@ -45,19 +48,22 @@ class Product {
       'created_at': createdAt,
       'imgUrl': imgUrl,
       'price': price,
+      'rating': rating,
     };
   }
 
-  Product copyWith(
-      {String? pid,
-      String? uid,
-      String? author,
-      String? authorImg,
-      String? title,
-      String? captions,
-      DateTime? createdAt,
-      String? imgUrl,
-      int? price}) {
+  Product copyWith({
+    String? pid,
+    String? uid,
+    String? author,
+    String? authorImg,
+    String? title,
+    String? captions,
+    DateTime? createdAt,
+    String? imgUrl,
+    int? price,
+    int? rating,
+  }) {
     return Product(
       pid: pid ?? this.pid,
       uid: uid ?? this.uid,
@@ -68,6 +74,7 @@ class Product {
       createdAt: createdAt ?? this.createdAt,
       imgUrl: imgUrl ?? this.imgUrl,
       price: price ?? this.price,
+      rating: rating ?? this.rating,
     );
   }
 }

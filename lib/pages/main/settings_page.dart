@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:reco_app/controller/auth_controller.dart';
 import 'package:reco_app/pages/main/edit_profile_page.dart';
+import 'package:reco_app/pages/main/ordered_product_page.dart';
 
 import '../../widgets/custom/settings_list_tile_widget.dart';
 
@@ -61,6 +62,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 context,
                 CupertinoPageRoute(
                   builder: (context) => const EditProfilePage(),
+                ),
+              );
+            },
+          ),
+          SettingsListTileWidget(
+            title: 'My Orders',
+            onTap: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => const OrderedProductPage(),
                 ),
               );
             },

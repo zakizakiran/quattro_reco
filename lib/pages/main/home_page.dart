@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:reco_app/controller/feeds_controller.dart';
 import 'package:reco_app/controller/product_controller.dart';
 import 'package:reco_app/helper/text_formatter.dart';
+import 'package:reco_app/models/product_model.dart';
 import 'package:reco_app/pages/main/feeds/detail_feeds_page.dart';
 import 'package:reco_app/pages/main/product/detail_product_page.dart';
 
@@ -41,7 +42,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: CustomSearchDelegate(_searchController),
+                delegate: CustomSearchDelegate(_searchController, ref.read),
               );
             },
           ),
@@ -293,8 +294,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
 class CustomSearchDelegate extends SearchDelegate<String> {
   final TextEditingController searchController;
+  final dynamic read;
 
-  CustomSearchDelegate(this.searchController);
+  CustomSearchDelegate(this.searchController, this.read);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -320,11 +322,86 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    var products = read(productControllerProvider);
+    var searchResults = products
+        .where((Product product) =>
+            product.title!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 8.0,
+      ),
+      itemCount: searchResults.length,
+      itemBuilder: (context, index) {
+        var productData = searchResults[index];
+        return buildProductCard(productData);
+      },
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    var products = read(productControllerProvider);
+    var suggestionResults = products
+        .where((Product product) =>
+            product.title!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return ListView.builder(
+      itemCount: suggestionResults.length,
+      itemBuilder: (context, index) {
+        var productData = suggestionResults[index];
+        return ListTile(
+          title: Text(productData.title.toString()),
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => DetailProductPage(product: productData),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget buildProductCard(Product product) {
+    return Card(
+      surfaceTintColor: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12.0),
+              topRight: Radius.circular(12.0),
+            ),
+            child: Image.network(
+              product.imgUrl.toString(),
+              width: double.infinity,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(product.title.toString()),
+          ),
+          const SizedBox(height: 8.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              NumberFormat.simpleCurrency(locale: 'id-ID', name: 'Rp. ')
+                  .format(product.price),
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

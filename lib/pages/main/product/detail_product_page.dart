@@ -1,9 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:reco_app/helper/text_formatter.dart';
 import 'package:reco_app/models/product_model.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:reco_app/pages/main/product/buy_product_page.dart';
+import 'package:reco_app/widgets/custom/custom_button.dart';
 
 class DetailProductPage extends ConsumerStatefulWidget {
   const DetailProductPage({super.key, required this.product});
@@ -80,7 +85,59 @@ class _DetailProductPageState extends ConsumerState<DetailProductPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                Text(decodeFromBase64(widget.product!.captions.toString()))
+                Text(decodeFromBase64(widget.product!.captions.toString())),
+                const SizedBox(height: 20.0),
+                const Text(
+                  'Rating',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                RatingBar.builder(
+                  initialRating: 0,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                    size: 200.0,
+                  ),
+                  onRatingUpdate: (rating) {
+                    Logger().i(rating);
+                  },
+                ),
+                const SizedBox(height: 32.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CustomButton(
+                      label: 'Add Rating',
+                      backgroundColor: 'FFFFFF',
+                      textColor: HexColor('4DC667'),
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 16.0),
+                    CustomButton(
+                      label: 'Buy Now',
+                      backgroundColor: '4DC667',
+                      textColor: Colors.white,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) =>
+                                BuyProductPage(product: widget.product),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                )
               ],
             ),
           ),
