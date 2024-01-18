@@ -8,6 +8,13 @@ Team Member:
 # Reco by Quattro
 We are proud to introduce our revolutionary app designed to embrace users' aspirations and creativity in responding to global issues surrounding waste and recycling. This app is crafted to create an active, caring community engaged in environmental conservation efforts. Through Our App, we hope to lead a positive movement that transforms how we view and interact with used items. Join our community and be part of the solution for a more sustainable future!
 
+![home](https://github.com/zakizakiran/quattro_reco/assets/77532233/de76af94-c38e-49f5-a989-9b8b4e673528)
+![feeds](https://github.com/zakizakiran/quattro_reco/assets/77532233/bc6c0d8c-4cf4-4f1d-9022-1c7f56238257)
+![profile](https://github.com/zakizakiran/quattro_reco/assets/77532233/15ce5f98-124d-4c4d-98b5-c808c1b9cc4b)
+
+
+
+
 # Features
 
 ## Buy and Sell Recycled Goods:
